@@ -26,18 +26,36 @@ namespace Proj_3_Github_Test
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Use(async (context,next) =>
-            {
-                await context.Response.WriteAsync("My first Middleware");
-            });
+            //app.Use(async (context,next) =>
+            //{
+            //    await context.Response.WriteAsync("My first Middleware");
 
-            //app.UseRouting();
+            //    await next();
+
+            //    await context.Response.WriteAsync("My first Middleware - Response");
+            //});
+
+            //app.Use(async(context,next) =>
+            //    {
+            //        await context.Response.WriteAsync("</br>My 2nd Middleware");
+            //    }
+            //);
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync("Hello World!");
+                });
+            });
 
             //app.UseEndpoints(endpoints =>
             //{
-            //    endpoints.MapGet("/", async context =>
+            //    endpoints.MapGet("/Mandar", async context =>
             //    {
-            //        await context.Response.WriteAsync("Hello World!");
+            //        await context.Response.WriteAsync("Hello World from Mandar!");
             //    });
             //});
         }
