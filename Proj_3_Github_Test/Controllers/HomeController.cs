@@ -8,9 +8,10 @@ namespace Proj_3_Github_Test.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()
+        public ViewResult Index()
         {
-            return "Welcome to Controller";
+            //return "Welcome to Controller";
+            return View();
         }
     }
 }
