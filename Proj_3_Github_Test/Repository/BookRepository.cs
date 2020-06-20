@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Proj_3_Github_Test.Models;
+using Proj_3_Github_Test.datamodels;
 
 namespace Proj_3_Github_Test.Repository
 {
     public class BookRepository
     {
+
+        private readonly MandarDBContext _databaseContext = null;
+
+        public BookRepository(MandarDBContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }
+
         public List<BookModel> GetAllBooks()
         {
             return _dataSource().ToList();

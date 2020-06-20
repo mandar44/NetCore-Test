@@ -1,0 +1,22 @@
+﻿
+@model Proj_3_Github_Test.datamodels.Book_Master
+@{
+    ViewData["Title"] = "AddNewBook";
+}
+
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <div class="container">
+        <h3 class="display-4"> Add New Book</h3>
+        <form method="post" asp-controller="Book" asp-action="AddNewBook">
+            <br />
+            <br />
+            <br />
+            <div class="container">
+                Book Name <input asp-for="Book_Name" />
+                Author <input asp-for="Author" />
+                Description <input asp-for="Description" />
+                Price <input asp-for="Price" />
+                <input type="submit" class="btn btn-primary" value="Add Book" />
+            </div>
+        </form>
+    </div>
