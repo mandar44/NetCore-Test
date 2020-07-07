@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Proj_3_Github_Test.Models;
 using Proj_3_Github_Test.datamodels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Proj_3_Github_Test.Repository
 {
@@ -15,6 +16,14 @@ namespace Proj_3_Github_Test.Repository
         public BookRepository(MandarDBContext databaseContext)
         {
             _databaseContext = databaseContext;
+        }
+
+        public async Task <Book_Master> AddNewBook(Book_Master Book)
+        {
+            Book_Master newBook = Book;
+            await _databaseContext.Book_Master.AddAsync(newBook);
+            await _databaseContext.SaveChangesAsync();
+            return newBook;
         }
 
         public List<BookModel> GetAllBooks()

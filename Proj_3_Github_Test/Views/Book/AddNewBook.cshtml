@@ -12,11 +12,25 @@
             <br />
             <br />
             <div class="container">
-                Book Name <input asp-for="Book_Name" />
-                Author <input asp-for="Author" />
-                Description <input asp-for="Description" />
-                Price <input asp-for="Price" />
+                <label asp-for="Book_Name"></label> <input asp-for="Book_Name" />
+                <label asp-for="Author"></label>    <input asp-for="Author" />
+                <label asp-for="Description"></label>   <input asp-for="Description" />
+                <label asp-for="Price"></label>     <input asp-for="Price" />
+                <label asp-for="Language"></label>     
+                <select asp-for="Language">
+                    <option></option>
+                </select>
                 <input type="submit" class="btn btn-primary" value="Add Book" />
             </div>
+            <br />
+            <br />
+            @if (ViewBag.isSuccess == true && ViewBag.errorMessage == "")
+            {
+                <div class="alert alert-success" role="alert">Record is saved successfully with ID = @ViewBag.bookID</div>}
+            //else if (ViewBag.isSuccess==false && ViewBag.errorMessage == ""){}
+            @*else if (ViewBag.isSuccess==false && ViewBag.errorMessage != ""){
+            <div class="alert alert-danger" role="alert">
+                <strong>Error:</strong> Unable to save record.
+            </div>}*@
         </form>
     </div>

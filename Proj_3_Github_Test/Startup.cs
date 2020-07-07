@@ -9,12 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Proj_3_Github_Test.datamodels;
+using Proj_3_Github_Test.Repository;
 
 namespace Proj_3_Github_Test
 {
     public class Startup
     {
-        private const string ConnectionString = "Server=MSDHP/MandarDB;Databse=MandarDB;user id=mandar;password=pass@1234; Integrated Security=True;";
+        private const string ConnectionString = "Server=MSDHP\\MandarDB;Database=MandarDB;user id=mandar;password=pass@1234; Integrated Security=True;";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -29,6 +30,7 @@ namespace Proj_3_Github_Test
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
+            services.AddScoped<BookRepository, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
