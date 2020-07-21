@@ -7,19 +7,43 @@
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <div class="container">
         <h3 class="display-4"> Add New Book</h3>
-        <form method="post" asp-controller="Book" asp-action="AddNewBook">
+
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status" id="myLoader" style="display:none">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" data-ajax="true"  
+              data-ajax-complete="testComplete" data-ajax-success="testSuccess" data-ajax-failure="testFailure" data-ajax-loading="#myLoader" 
+              asp-controller="Book" asp-action="AddNewBook" >
             <br />
             <br />
             <br />
             <div class="container">
-                <label asp-for="Book_Name"></label> <input asp-for="Book_Name" />
+                <label asp-for="Book_Name"></label>
+                <input asp-for="Book_Name" />
+                <span asp-validation-for="Book_Name" class="text-danger"></span>
+
                 <label asp-for="Author"></label>    <input asp-for="Author" />
                 <label asp-for="Description"></label>   <input asp-for="Description" />
                 <label asp-for="Price"></label>     <input asp-for="Price" />
-                <label asp-for="Language"></label>     
-                <select asp-for="Language">
-                    <option></option>
+                <label asp-for="Language"></label>
+                <select asp-for="Language" asp-items="ViewBag.Languages">
                 </select>
+
+                @*<label asp-for="BookImage"></label>
+                <input asp-for="BookImage" />
+                *@
+
+                <div class="custom-file">
+                    <input asp-for="BookImage" class="custom-file-input" id="validatedCustomFile" required>
+                    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                </div>
+
+                <span asp-validation-for="BookImage" class="text-danger"></span>
+
                 <input type="submit" class="btn btn-primary" value="Add Book" />
             </div>
             <br />
@@ -34,3 +58,21 @@
             </div>}*@
         </form>
     </div>
+@section scripts{ 
+
+<script>
+
+    function testComplete(data) {
+        alert("complete");
+        console.log("test");
+    }
+    function testSuccess(data) {
+        alert("success");
+    }
+
+    function testFailure(data) {
+        alert("failure");
+    }
+</script>
+
+}

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="DataModels\" />
+    <Folder Include="wwwroot\books\cover\" />
   </ItemGroup>
 
 </Project>
