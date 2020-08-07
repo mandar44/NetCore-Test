@@ -35,8 +35,7 @@ steps:
 
 - task: AzureRmWebAppDeployment@4
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(cd2227c9-5924-46e6-87d5-e2a32a4b53e5)'
-    appType: 'webApp'
-    WebAppName: 'CoreGitHubV1'
+    ConnectionType: 'PublishProfile'
+    PublishProfilePath: '$(System.DefaultWorkingDirectory)/**/*.pubxml'
+    PublishProfilePassword: '8cJtqXTE5HZ581eystbvwwh7a06SHebims97jbRTlK6xN7kcpZnmco8T0jsG'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
