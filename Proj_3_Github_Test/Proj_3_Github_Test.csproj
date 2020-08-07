@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>ab712b39-4d2b-48d5-bde2-c3bc24c3d67e</UserSecretsId>
+    <Configurations>Debug;Release;UAT</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

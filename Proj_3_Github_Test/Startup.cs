@@ -15,7 +15,8 @@ namespace Proj_3_Github_Test
 {
     public class Startup
     {
-        private const string ConnectionString = "Server=MSDHP\\MandarDB;Database=MandarDB;user id=mandar;password=pass@1234; Integrated Security=True;";
+        //private const string ConnectionString = "Server=MandarPC;Database=MandarDB;user id=mandar;password=pass@1234; Integrated Security=True;";
+        private const string ConnectionString = "Server=mandardbserver.database.windows.net;Database=CoreGitHubDB;user id=dbadmin;password=pass@1234; Integrated Security=False;";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940

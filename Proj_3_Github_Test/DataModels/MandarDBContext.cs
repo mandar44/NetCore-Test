@@ -27,7 +27,7 @@ namespace Proj_3_Github_Test.datamodels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=MSDHP\\MandarDB;Database=MandarDB;User Id=mandar;Password=pass@1234;");
+                optionsBuilder.UseSqlServer("Server=MandarPC;Database=MandarDB;User Id=mandar;Password=pass@1234;");
             }
         }
 
