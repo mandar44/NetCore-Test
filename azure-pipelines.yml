@@ -44,13 +44,13 @@ steps:
   continueOnError: true
 
 - task: CopyFiles@1
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
     SourceFolder: '$(build.sourcesdirectory)'
     Contents: |
       **\bin\$(BuildConfiguration)\**
       src\*.testsettings
-    TargetFolder: '$(build.artifactstagingdirectory)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
   condition: SucceededOrFailed()
 
 - task: PublishBuildArtifacts@1
