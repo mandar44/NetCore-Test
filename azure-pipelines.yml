@@ -53,6 +53,10 @@ steps:
     TargetFolder: '$(build.artifactstagingdirectory)'
   condition: SucceededOrFailed()
 
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   inputs:
