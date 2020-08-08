@@ -54,8 +54,7 @@ steps:
   condition: SucceededOrFailed()
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
   inputs:
-    PathtoPublish: $(build.artifactstagingdirectory)'
-  condition: SucceededOrFailed()
-
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
