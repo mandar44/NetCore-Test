@@ -37,11 +37,11 @@ steps:
 # Added settings to save build artifacts
 ######################################
 
-- task: PublishSymbols@1
-  displayName: 'Publish symbols path: '
+- task: PublishSymbols@2
   inputs:
-    SearchPattern: '**\bin\**\*.pdb'
-  continueOnError: true
+    SearchPattern: '**/bin/**/*.pdb'
+    SymbolServerType: 'TeamServices'
+
 
 - task: CopyFiles@1
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
