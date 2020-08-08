@@ -47,7 +47,10 @@ steps:
 #  inputs:
 #    SearchPattern: '**\bin\**\*.pdb'
 #  continueOnError: true
-## Error = Github not supported
+
+## Error/Warning
+##[warning]Unsupported source provider 'GitHub' for source indexing.
+##[warning]Unable to index sources.
 
 
 - task: CopyFiles@1
