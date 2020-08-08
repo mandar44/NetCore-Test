@@ -47,6 +47,7 @@ steps:
 #  inputs:
 #    SearchPattern: '**\bin\**\*.pdb'
 #  continueOnError: true
+## Error = Github not supported
 
 
 - task: CopyFiles@1
