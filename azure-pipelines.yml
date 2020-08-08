@@ -32,3 +32,30 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+######################################
+# Added settings to save build artifacts
+######################################
+
+- task: PublishSymbols@1
+  displayName: 'Publish symbols path: '
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+  continueOnError: true
+
+- task: CopyFiles@1
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: |
+      **\bin\$(BuildConfiguration)\**
+      src\*.testsettings
+    TargetFolder: '$(build.artifactstagingdirectory)'
+  condition: succeedOrFailed()
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
+
