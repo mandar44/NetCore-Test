@@ -33,29 +33,9 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-######################################
-# Added settings to save build artifacts
-######################################
-
-- task: PublishSymbols@2
+- task: AzureRmWebAppDeployment@4
   inputs:
-    SearchPattern: '**/bin/**/*.pdb'
-    SymbolServerType: 'TeamServices'
-
-
-- task: CopyFiles@1
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-    SourceFolder: '$(build.sourcesdirectory)'
-    Contents: |
-      **\bin\$(BuildConfiguration)\**
-      src\*.testsettings
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  condition: SucceededOrFailed()
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-
+    ConnectionType: 'PublishProfile'
+    PublishProfilePath: '$(System.DefaultWorkingDirectory)/**/*.pubxml'
+    PublishProfilePassword: '8cJtqXTE5HZ581eystbvwwh7a06SHebims97jbRTlK6xN7kcpZnmco8T0jsG'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
