@@ -42,6 +42,16 @@ steps:
     SearchPattern: '**/bin/**/*.pdb'
     SymbolServerType: 'TeamServices'
 
+#- task: PublishSymbols@1
+#  displayName: 'Publish symbols path: '
+#  inputs:
+#    SearchPattern: '**\bin\**\*.pdb'
+#  continueOnError: true
+
+## Error/Warning
+##[warning]Unsupported source provider 'GitHub' for source indexing.
+##[warning]Unable to index sources.
+
 
 - task: CopyFiles@1
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
