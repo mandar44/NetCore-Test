@@ -32,3 +32,40 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+######################################
+# Added settings to save build artifacts
+######################################
+
+- task: PublishSymbols@2
+  inputs:
+    SearchPattern: '**/bin/**/*.pdb'
+    SymbolServerType: 'TeamServices'
+
+#- task: PublishSymbols@1
+#  displayName: 'Publish symbols path: '
+#  inputs:
+#    SearchPattern: '**\bin\**\*.pdb'
+#  continueOnError: true
+
+## Error/Warning
+##[warning]Unsupported source provider 'GitHub' for source indexing.
+##[warning]Unable to index sources.
+
+
+- task: CopyFiles@1
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: |
+      **\bin\$(BuildConfiguration)\**
+      src\*.testsettings
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  condition: SucceededOrFailed()
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
