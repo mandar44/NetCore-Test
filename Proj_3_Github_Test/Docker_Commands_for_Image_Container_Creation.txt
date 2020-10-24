@@ -1,0 +1,150 @@
+
+Reference : https://docs.docker.com/engine/examples/dotnetcore/
+Create a Dockerfile for an ASP.NET Core application
+
+    Create a Dockerfile in your project folder.
+    Add the text below to your Dockerfile for either Linux or Windows Containers. The tags below are multi-arch meaning they pull either Windows or Linux containers depending on what mode is set in Docker Desktop for Windows. Read more on switching containers.
+    The Dockerfile assumes that your application is called aspnetapp. Change the Dockerfile to use the DLL file of your project.
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+
+    To make your build context as small as possible add a .dockerignore file to your project folder and copy the following into it.
+
+bin/
+obj/
+
+Build and run the Docker image
+
+    Open a command prompt and navigate to your project folder.
+    Use the following commands to build and run your Docker image:
+
+$ docker build -t aspnetapp .
+$ docker run -d -p 8080:80 --name myapp aspnetapp
+
+View the web page running from a container
+
+    Go to localhost:8080 to access your app in a web browser.
+    If you are using the Nano Windows Container and have not updated to the Windows Creator Update there is a bug affecting how Windows 10 talks to Containers via “NAT” (Network Address Translation). You must hit the IP of the container directly. You can get the IP address of your container with the following steps:
+        Run docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" myapp
+        Copy the container IP address and paste into your browser. (For example, 172.16.240.197)
+
+--///////////////////		Command Prompt	///////////////////
+
+Microsoft Windows [Version 10.0.19041.450]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Mandar_Core_and_Git_Projects\MVC_Core_Projects\Proj_3_Github_Test\Proj_3_Github_Test>docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+C:\Mandar_Core_and_Git_Projects\MVC_Core_Projects\Proj_3_Github_Test\Proj_3_Github_Test>docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+mandar44/redisv1withtag   1                   29375c1d52c3        2 days ago          8.74MB
+mandar44/redisv1withtag   2                   29375c1d52c3        2 days ago          8.74MB
+mandar44/redisv1withtag   latest              29375c1d52c3        2 days ago          8.74MB
+mandar44/node-app         latest              0533706c4a3e        5 days ago          122MB
+redis                     latest              41de2cc0b30e        10 days ago         104MB
+node                      alpine              0e0d8a11f565        2 weeks ago         117MB
+docker/getting-started    latest              1f32459ef038        8 weeks ago         26.8MB
+alpine                    latest              a24bb4013296        3 months ago        5.57MB
+
+C:\Mandar_Core_and_Git_Projects\MVC_Core_Projects\Proj_3_Github_Test\Proj_3_Github_Test>docker build -t github_core_test .
+Sending build context to Docker daemon  9.111MB
+Step 1/10 : FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+3.1: Pulling from dotnet/core/sdk
+57df1a1f1ad8: Pull complete
+71e126169501: Pull complete
+1af28a55c3f3: Pull complete
+03f1c9932170: Pull complete
+1e9f61add744: Pull complete
+8bc534dd6017: Pull complete
+7b0d6e95dc2c: Pull complete
+Digest: sha256:95f46b6614f7fb759cdad3b38286e6d9a25422113a07b5862dec1400379e796b
+Status: Downloaded newer image for mcr.microsoft.com/dotnet/core/sdk:3.1
+ ---> c4155a9104a8
+Step 2/10 : WORKDIR /app
+ ---> Running in 0314932f0c97
+Removing intermediate container 0314932f0c97
+ ---> 63def4c2f04d
+Step 3/10 : COPY *.csproj ./
+ ---> 14d13174e08e
+Step 4/10 : RUN dotnet restore
+ ---> Running in db47dcd73b00
+  Determining projects to restore...
+  Restored /app/Proj_3_Github_Test.csproj (in 1.11 min).
+Removing intermediate container db47dcd73b00
+ ---> 03040606c1c5
+Step 5/10 : COPY . ./
+ ---> c77d0229f8d8
+Step 6/10 : RUN dotnet publish -c Release -o out
+ ---> Running in f538f91acfb1
+Microsoft (R) Build Engine version 16.7.0+7fb82e5b2 for .NET
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+DataModels/MandarDBContext.cs(29,10): warning CS1030: #warning: 'To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.' [/app/Proj_3_Github_Test.csproj]
+  Proj_3_Github_Test -> /app/bin/Release/netcoreapp3.1/Proj_3_Github_Test.dll
+  Proj_3_Github_Test -> /app/bin/Release/netcoreapp3.1/Proj_3_Github_Test.Views.dll
+  Proj_3_Github_Test -> /app/out/
+Removing intermediate container f538f91acfb1
+ ---> f400add2c7c0
+Step 7/10 : FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+3.1: Pulling from dotnet/core/aspnet
+d121f8d1c412: Pull complete
+7b2d5a029506: Pull complete
+778ad5bbc2d1: Pull complete
+6de7a0eb2598: Pull complete
+6d9bf7184ec4: Pull complete
+Digest: sha256:adeb306016cb11425faad95b59f138c58910023f5754caeecd815b403330c7a4
+Status: Downloaded newer image for mcr.microsoft.com/dotnet/core/aspnet:3.1
+ ---> 28de0d96c539
+Step 8/10 : WORKDIR /app
+ ---> Running in 19bb05236a3f
+Removing intermediate container 19bb05236a3f
+ ---> 4eb19bc2d49d
+Step 9/10 : COPY --from=build-env /app/out .
+ ---> a5f867b0a7e3
+Step 10/10 : ENTRYPOINT ["dotnet", "Proj_3_Github_Test.dll"]
+ ---> Running in f721ebd5bd57
+Removing intermediate container f721ebd5bd57
+ ---> 88b1bf0536d4
+Successfully built 88b1bf0536d4
+Successfully tagged github_core_test:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+
+C:\Mandar_Core_and_Git_Projects\MVC_Core_Projects\Proj_3_Github_Test\Proj_3_Github_Test>docker images
+REPOSITORY                             TAG                 IMAGE ID            CREATED              SIZE
+github_core_test                       latest              88b1bf0536d4        About a minute ago   253MB
+<none>                                 <none>              f400add2c7c0        2 minutes ago        1.12GB
+mcr.microsoft.com/dotnet/core/sdk      3.1                 c4155a9104a8        2 days ago           708MB
+mcr.microsoft.com/dotnet/core/aspnet   3.1                 28de0d96c539        2 days ago           207MB
+mandar44/redisv1withtag                1                   29375c1d52c3        2 days ago           8.74MB
+mandar44/redisv1withtag                2                   29375c1d52c3        2 days ago           8.74MB
+mandar44/redisv1withtag                latest              29375c1d52c3        2 days ago           8.74MB
+mandar44/node-app                      latest              0533706c4a3e        5 days ago           122MB
+redis                                  latest              41de2cc0b30e        10 days ago          104MB
+node                                   alpine              0e0d8a11f565        2 weeks ago          117MB
+docker/getting-started                 latest              1f32459ef038        8 weeks ago          26.8MB
+alpine                                 latest              a24bb4013296        3 months ago         5.57MB
+
+C:\Mandar_Core_and_Git_Projects\MVC_Core_Projects\Proj_3_Github_Test\Proj_3_Github_Test>docker run -d -p 8080:80 --name GitHub_Core_App github_core_test
+9194b03dce5ac7863409cab641c0d8b97c13b17912ef172574d252178da376f3
+
+C:\Mandar_Core_and_Git_Projects\MVC_Core_Projects\Proj_3_Github_Test\Proj_3_Github_Test>docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+9194b03dce5a        github_core_test    "dotnet Proj_3_Githu…"   9 seconds ago       Up 7 seconds        0.0.0.0:8080->80/tcp   GitHub_Core_App
