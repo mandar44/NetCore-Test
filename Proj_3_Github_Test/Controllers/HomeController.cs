@@ -13,5 +13,15 @@ namespace Proj_3_Github_Test.Controllers
             //return "Welcome to Controller";
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Login(string txtUserName,string txtPassword)
+        {
+
+
+            return RedirectToAction("Index", "RedisTest");
+
+        }
+
     }
 }

@@ -1,0 +1,27 @@
+﻿
+@model Proj_3_Github_Test.Models.RedisCache
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+<head>
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <form method="post" name="frmRedis" id="frmRedis">
+        <h1>Index</h1>
+
+        <div>
+            <input type="text" asp-for="key1" />
+            <input type="text" asp-for="value1" />
+            <input type="submit" value="Save Key" asp-controller="RedisTest" asp-action="Save"/>
+            @*<a asp-controller="RedisTest" asp-action="Save"> Save Redis Key value</a>*@
+            <br /><br />
+            <input type="text" id="NewValue" value="@ViewBag.value1" />
+            @*<a asp-controller="RedisTest" asp-action="Show"> Display Key Value</a>*@
+
+        </div>
+    </form>
+</body>

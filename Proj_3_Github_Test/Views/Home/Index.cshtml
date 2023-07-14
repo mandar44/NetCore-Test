@@ -16,7 +16,14 @@
     <h1 class="h1 alert-danger"> Switching to Dev Branch - New Pipeline for Dev Branch</h1>
     <input type="button" class="btn btn-danger" value="Click on Me" onclick="javascript: alert('ok');" />
     <h1 class="h1 alert-danger"> Using .Net Core CI-CD Template for Pipeline</h1>
-    <a asp-controller="Book" asp-action="AddNewBook">Add New Book</a>
+    <a asp-controller="Book" asp-action="AddNewBook">Add New Book</a><br />
+    <a asp-controller="RedisTest" asp-action="Index">Redis Test</a>
+    <form id="frmLogin" method="post">
+        User Name : <input type="text" id="txtUserName" />
+        Password  : <input type="password" id="txtPassword" />
+        <input type="button" asp-controller="Home" asp-action="Login" value="Login" class="btn btn-outline-primary"/> 
+
+    </form>
 </body>
 </html>
 

@@ -10,13 +10,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Proj_3_Github_Test.datamodels;
 using Proj_3_Github_Test.Repository;
+using System.Configuration;
 
 namespace Proj_3_Github_Test
 {
     public class Startup
     {
         //private const string ConnectionString = "Server=MandarPC;Database=MandarDB;user id=mandar;password=pass@1234; Integrated Security=True;";
-        private const string ConnectionString = "Server=mandardbserver.database.windows.net;Database=CoreGitHubDB;user id=dbadmin;password=pass@1234; Integrated Security=False;";
+         string ConnectionString = "Server=mandardbserver.database.windows.net;Database=CoreGitHubDB;user id=dbadmin;password=pass@1234; Integrated Security=False;";
+
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -27,6 +30,12 @@ namespace Proj_3_Github_Test
             services.AddDbContext<MandarDBContext>(
                 options => options.UseSqlServer(ConnectionString)
             );
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = ConfigurationManager.ConnectionStrings["MyRedisConStr"].ConnectionString;
+                options.InstanceName = "SampleInstance";
+            });
 
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -54,12 +63,14 @@ namespace Proj_3_Github_Test
             //});
 
             //app.Use(async(context,next) =>
-            //    {
+            //+++++    {
             //        await context.Response.WriteAsync("</br>My 2nd Middleware");
             //    }
             //);
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
