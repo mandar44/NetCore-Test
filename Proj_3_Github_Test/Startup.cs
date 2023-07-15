@@ -70,7 +70,7 @@ namespace Proj_3_Github_Test
 
             app.UseRouting();
 
-            app.UseSession();
+           // app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
